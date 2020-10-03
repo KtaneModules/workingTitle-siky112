@@ -1,4 +1,4 @@
-﻿//Hey, welcome to my code. I'm sorry for breaking every style rule in existence.
+//Hey, welcome to my code. I'm sorry for breaking every style rule in existence.
 
 using System;
 using System.Collections;
@@ -144,4 +144,35 @@ public class workingTitleCode : MonoBehaviour
 		}
 	}
 	
+	void TwitchHandleForcedSolve()
+	{
+		Action press = buttonToPress == 0 ? (Action)PressButton1 : buttonToPress == 1 ? (Action)PressButton2 : (Action)PressButton3;
+		press();
+	}
+	
+	#pragma warning disable 414
+	public string TwitchHelpMessage = "Use '!{0} <button>' to press a button! Button can be 'a; b; c; 1; 2; 3'";
+	#pragma warning restore 414
+	IEnumerator ProcessTwitchCommand(string command)
+	{
+		yield return null;
+		switch(command.ToLowerInvariant())
+		{
+			case "1":
+			case "a":
+				button1.OnInteract();
+				break;
+			case "2":
+			case "b":
+				button2.OnInteract();
+				break;
+			case "3":
+			case "c":
+				button3.OnInteract();
+				break;
+			default:
+				yield return "sendtochaterror Invalid button!";
+				yield break;
+		}
+	}
 }
